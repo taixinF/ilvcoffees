@@ -1,5 +1,17 @@
 ## nest 基础使用
 
+### 指令：
+
+> nest generate controller '控制器名称'
+
+- 简写：nest g co '控制器名称' 根文件会自动生成
+
+> nest g co --no-spec
+
+- 不用生成测试文件
+
+> nest g co modules/abc --dry-run
+
 ### 文件基础认识
 
 #### main.js
@@ -56,15 +68,3 @@ export class CoffeesController {
 ```
 
 - 路由还可以通过Get('参数') 进行拼接访问
-
-### 指令：
-
-> nest generate controller '控制器名称'
-
-- 简写：nest g co '控制器名称' 根文件会自动生成
-
-> nest g co --no-spec
-
-- 不用生成测试文件
-
-> nest g co modules/abc --dry-run

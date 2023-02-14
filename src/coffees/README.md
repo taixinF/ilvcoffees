@@ -138,4 +138,88 @@ export class CoffeesController {
 }
 ```
 
+### 12. Implement Pagination with Query Parameters  (Implement  with)用...实现
 
+**装饰器：**
+
+- `@Query` 用于获取所有或特定部分的查询参数 类似param body
+
+```ts
+@Controller()
+export class CoffeesController {
+//    ...
+    @Get()
+    update(@Query() paginationQuery) {
+        const {limit, offset} = paginationQuery
+        return `This action updates #${id} coffee, limit: ${limit}, offset: ${offset}`
+    }
+}
+```
+
+### 13. Create a Basic Service
+
+_服务隔离_
+
+_每一个服务器都是提供者 主要思想是它可以注入依赖_
+
+**CLI:指令：**
+
+- `nest generate service`或者`nest g s` 会在你提供的Module数组中自动添加
+
+**app.module.ts**
+
+```ts
+@Module({
+    imports: [],
+    controllers: [AppController, CoffeesController], //controller : controls the invocation of the service
+    //这样对象之间可以创建各种关系 对象实例链接在一起的逻辑都可以由nest运行时系统处理
+    //而不是尝试自己创建和管理这种类型的依赖注入
+    providers: [AppService, CoffeesService], //create more services to facilitate isolation
+})
+export class AppModule {
+}
+```
+
+**service**
+
+_结构_
+_负责数据存储和检索_
+
+```ts
+import {Injectable} from '@nestjs/common';
+
+@Injectable()
+export class CoffeesService {
+}
+```
+
+**注入service**
+
+```ts
+@Controller('coffees')
+export class CoffeesController {
+    //使用构造函数constructor注入service 第三个值是我们对他的命名
+    constructor(private readonly coffeesService: CoffeesService) {
+    }
+
+    @Get()
+    update(@Query() paginationQuery) {
+        const {limit, offset} = paginationQuery;
+        return `This action returns all coffee, limit: ${limit}, offset: ${offset}`;
+    }
+}
+```
+
+**模拟数据源 coffees.service.ts**
+
+```ts
+import {Injectable} from '@nestjs/common';
+
+@Injectable()
+export class CoffeesService {
+    //模拟数据源  如数据库
+    private coffees = [];
+}
+```
+
+13 4.17

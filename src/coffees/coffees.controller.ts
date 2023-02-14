@@ -1,9 +1,10 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 
 @Controller('coffees')
 export class CoffeesController {
-  @Get('index')
-  findAll() {
-    return 'this action returns all coffees';
+  @Get()
+  update(@Query() paginationQuery) {
+    const { limit, offset } = paginationQuery;
+    return `This action returns all coffee, limit: ${limit}, offset: ${offset}`;
   }
 }
