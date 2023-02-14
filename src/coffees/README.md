@@ -193,12 +193,14 @@ export class CoffeesService {
 }
 ```
 
-**注入service**
+**注入service coffees.controller.ts**
 
 ```ts
 @Controller('coffees')
 export class CoffeesController {
     //使用构造函数constructor注入service 第三个值是我们对他的命名
+    //注入后也可以使用service中使用的方法
+    //也可以在controller暂时自定义方法
     constructor(private readonly coffeesService: CoffeesService) {
     }
 
@@ -214,12 +216,12 @@ export class CoffeesController {
 
 ```ts
 import {Injectable} from '@nestjs/common';
+import {Coffee} from "./coffee.entity";
 
 @Injectable()
 export class CoffeesService {
     //模拟数据源  如数据库
-    private coffees = [];
+    //使用我们在entities中创建的数据
+    private coffees: Coffee[] = []; //还可以在其中预定义单个实体作为基础演示
 }
 ```
-
-13 4.17
