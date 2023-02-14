@@ -68,6 +68,3 @@ export class CoffeesController {
 - 不用生成测试文件
 
 > nest g co modules/abc --dry-run
-
-
-
