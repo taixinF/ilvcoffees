@@ -87,14 +87,16 @@ export class CoffeesController {
 //...
     @Get()
     //使用原生的一些方法操作
-    //
+// use some of the native methods to operate  
     findAll(@Res response) {
         response.status(200).send('This action returns all coffees')
     }
 
     @Post()
     //HttpStatus.后面有很多可以用的http状态码 我们选择 GOME
+    //There are a number of http status codes that can be used following HttpStatus. Let's choose GOME
     @HttpCode(HttpStatus.GONE) //允许我们设置一个特定的状态码
+    // allows us to set a specific status code
     create(@Body() body) {
 
         return body;
@@ -173,7 +175,9 @@ _每一个服务器都是提供者 主要思想是它可以注入依赖_
     imports: [],
     controllers: [AppController, CoffeesController], //controller : controls the invocation of the service
     //这样对象之间可以创建各种关系 对象实例链接在一起的逻辑都可以由nest运行时系统处理
+    //So you can create all kinds of relationships between objects and the logic that the instances of objects link together can be handled by the nest runtime system
     //而不是尝试自己创建和管理这种类型的依赖注入
+    //Rather than trying to create and manage this type of dependency injection yourself
     providers: [AppService, CoffeesService], //create more services to facilitate isolation
 })
 export class AppModule {
@@ -199,11 +203,15 @@ export class CoffeesService {
 @Controller('coffees')
 export class CoffeesController {
     //使用构造函数constructor注入service 第三个值是我们对他的命名
+    //The third value injected into service using the constructor is the name we give it
     //注入后也可以使用service中使用的方法
+    //The same methods used in service can also be used after injection
     //也可以在controller暂时自定义方法
+    //You can also temporarily customize methods in controller
     constructor(private readonly coffeesService: CoffeesService) {
     }
 
+    //🧨🧨🧨🧨 具体见coffees.controller.ts 构造器以下具体操作
     @Get()
     update(@Query() paginationQuery) {
         const {limit, offset} = paginationQuery;
@@ -221,7 +229,59 @@ import {Coffee} from "./coffee.entity";
 @Injectable()
 export class CoffeesService {
     //模拟数据源  如数据库
-    //使用我们在entities中创建的数据
-    private coffees: Coffee[] = []; //还可以在其中预定义单个实体作为基础演示
+    //simulate data sources such as databases
+    //使用我们在entities中创建的数据 
+    // using data we created in entities
+    //还可以在其中预定义单个实体作为基础演示
+    //You can also pre-define a single entity there as a base demonstration
+    private coffees: Coffee[] = [];
 }
 ```
+
+### 14. Send User Friendly Error Message
+
+**抛出异常构造函数**
+
+- `HttpException(message,code)` 数据库操作时有好的抛出错误
+- ...等等
+
+**coffees.service.ts**
+
+```ts
+import {HttpException} from "@nestjs/common";
+
+@Injectable()
+export class CoffeesService {
+//...
+    findOne(id: string) {
+        //nest 也为我们内置默认服务器内部抛错
+        // throw 'A random error'
+        // {
+        //   "statusCode": 500,
+        //   "message": "Internal server error"
+        // }
+        const coffee = this.coffees.find((item) => item.id === +id);
+        if (!coffee) {
+            //包括NotFoundException InternalServerErrorException BadRequestException等等
+            throw new HttpException(`Coffee #${id} not found`, HttpStatus.NOT_FOUND)
+            //{
+            //"statusCode": 404,
+            //"message": "Coffee #232323 not found"
+            //}
+            // 2.这个异常抛错助手已经帮我完成了状态码的抛出
+            //This exception throw assistant has helped me complete the status code throw
+            // throw new 包括NotFoundException(`Coffee #${id} not found`)
+            // {
+            //   "statusCode": 404,
+            //   "message": "Coffee #2 not found",
+            //   "error": "Not Found"
+            // }
+        }
+        return coffee
+    }
+
+//...
+}
+```
+
+### Encompass Business Domain in Modules
