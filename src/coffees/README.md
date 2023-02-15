@@ -5,29 +5,29 @@
 - `@Param()` 可以让我们获取所有传入的请求参数 并且在函数体中使用
 
 ```ts
-import {Controller, Get} from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 
 @Controller('coffees')
 export class CoffeesController {
-    @Get('index')
-    findAll() {
-        return 'this action returns all coffees';
-    }
+  @Get('index')
+  findAll() {
+    return 'this action returns all coffees';
+  }
 
-    //动态传入参数
-    @Get(':id')
-    //使用装饰器 并对其命名
-    // params 可以让我们获取所有传入的请求参数 并且在函数体中使用
-    findOne(@Param() params) {
-        //通过重命名 访问其中传入的参数
-        return `This action returns #${params.id} coffee`;
-    }
+  //动态传入参数
+  @Get(':id')
+  //使用装饰器 并对其命名
+  // params 可以让我们获取所有传入的请求参数 并且在函数体中使用
+  findOne(@Param() params) {
+    //通过重命名 访问其中传入的参数
+    return `This action returns #${params.id} coffee`;
+  }
 
-    //@Param也可以通过传入一个String访问特定的参数 
-    findOne(@Param('id') id: String) {
-        //通过重命名 访问其中传入的参数
-        return `This action returns #${id} coffee`;
-    }
+  //@Param也可以通过传入一个String访问特定的参数 
+  findOne(@Param('id') id: String) {
+    //通过重命名 访问其中传入的参数
+    return `This action returns #${id} coffee`;
+  }
 
 
 }
@@ -44,23 +44,23 @@ export class CoffeesController {
 @Controller('coffees')
 export class CoffeesController {
 //...
-    @Post()
-    create(@Body() body) {
-        //如果没有设置我们请求的body 就是我们返回body
-        // If we don't set the body we're requesting we're returning the body
-        return body;
-    }
+  @Post()
+  create(@Body() body) {
+    //如果没有设置我们请求的body 就是我们返回body
+    // If we don't set the body we're requesting we're returning the body
+    return body;
+  }
 
-    @Post() //不介意 这样做  Don't mind doing that
-    //也可以在@Body中置顶返回的String
-    //You can also put the String returned at the top in @Body
-    //指定属性会遇到我们访问特定属性时 不会验证其他属性 --- 所以谨慎使用   
-    //Specifying a property will encounter that we do not validate other properties when accessing a particular property - so use caution
-    create(@Body('name') body) {
-        //如果没有设置我们请求的body 就是我们返回body
-        //If we don't set the body we're requesting we're returning the body
-        return body;
-    }
+  @Post() //不介意 这样做  Don't mind doing that
+  //也可以在@Body中置顶返回的String
+  //You can also put the String returned at the top in @Body
+  //指定属性会遇到我们访问特定属性时 不会验证其他属性 --- 所以谨慎使用   
+  //Specifying a property will encounter that we do not validate other properties when accessing a particular property - so use caution
+  create(@Body('name') body) {
+    //如果没有设置我们请求的body 就是我们返回body
+    //If we don't set the body we're requesting we're returning the body
+    return body;
+  }
 }
 ```
 
@@ -80,27 +80,27 @@ _nest 默认为成功请求返回 默认使用的是express_
 - `@Res` 访问底层响应对象 方便我们使用express 中的一些原生的方法
 
 ```ts
-import {HttpCode, HttpStatus} from "@nestjs/common";
+import { HttpCode, HttpStatus } from "@nestjs/common";
 
 @Controller('coffees')
 export class CoffeesController {
 //...
-    @Get()
-    //使用原生的一些方法操作
+  @Get()
+  //使用原生的一些方法操作
 // use some of the native methods to operate  
-    findAll(@Res response) {
-        response.status(200).send('This action returns all coffees')
-    }
+  findAll(@Res response) {
+    response.status(200).send('This action returns all coffees')
+  }
 
-    @Post()
-    //HttpStatus.后面有很多可以用的http状态码 我们选择 GOME
-    //There are a number of http status codes that can be used following HttpStatus. Let's choose GOME
-    @HttpCode(HttpStatus.GONE) //允许我们设置一个特定的状态码
-    // allows us to set a specific status code
-    create(@Body() body) {
+  @Post()
+  //HttpStatus.后面有很多可以用的http状态码 我们选择 GOME
+  //There are a number of http status codes that can be used following HttpStatus. Let's choose GOME
+  @HttpCode(HttpStatus.GONE) //允许我们设置一个特定的状态码
+  // allows us to set a specific status code
+  create(@Body() body) {
 
-        return body;
-    }
+    return body;
+  }
 }
 ```
 
@@ -128,15 +128,15 @@ _当我们像这样使用底层响应时 应为不同的库可能响应对象上
 @Controller()
 export class CoffeesController {
 //    ...
-    @Patch(':id')
-    update(@Parms(id) id: string, @Body body) {
-        return `This action updates #${id} coffee`
-    }
+  @Patch(':id')
+  update(@Parms(id) id: string, @Body body) {
+    return `This action updates #${id} coffee`
+  }
 
-    @Delete('id')
-    remove(@Parms(id) id: string) {
-        return `This action removes #${id} coffee`
-    }
+  @Delete('id')
+  remove(@Parms(id) id: string) {
+    return `This action removes #${id} coffee`
+  }
 }
 ```
 
@@ -150,11 +150,11 @@ export class CoffeesController {
 @Controller()
 export class CoffeesController {
 //    ...
-    @Get()
-    update(@Query() paginationQuery) {
-        const {limit, offset} = paginationQuery
-        return `This action updates #${id} coffee, limit: ${limit}, offset: ${offset}`
-    }
+  @Get()
+  update(@Query() paginationQuery) {
+    const { limit, offset } = paginationQuery
+    return `This action updates #${id} coffee, limit: ${limit}, offset: ${offset}`
+  }
 }
 ```
 
@@ -166,19 +166,23 @@ _每一个服务器都是提供者 主要思想是它可以注入依赖_
 
 **CLI:指令：**
 
-- `nest generate service`或者`nest g s` 会在你提供的Module数组中自动添加
+> nest generate service 'name'
+>
+> nest g s
+
+会在你提供的Module数组中自动添加
 
 **app.module.ts**
 
 ```ts
 @Module({
-    imports: [],
-    controllers: [AppController, CoffeesController], //controller : controls the invocation of the service
-    //这样对象之间可以创建各种关系 对象实例链接在一起的逻辑都可以由nest运行时系统处理
-    //So you can create all kinds of relationships between objects and the logic that the instances of objects link together can be handled by the nest runtime system
-    //而不是尝试自己创建和管理这种类型的依赖注入
-    //Rather than trying to create and manage this type of dependency injection yourself
-    providers: [AppService, CoffeesService], //create more services to facilitate isolation
+  imports: [],
+  controllers: [AppController, CoffeesController], //controller : controls the invocation of the service
+  //这样对象之间可以创建各种关系 对象实例链接在一起的逻辑都可以由nest运行时系统处理
+  //So you can create all kinds of relationships between objects and the logic that the instances of objects link together can be handled by the nest runtime system
+  //而不是尝试自己创建和管理这种类型的依赖注入
+  //Rather than trying to create and manage this type of dependency injection yourself
+  providers: [AppService, CoffeesService], //create more services to facilitate isolation
 })
 export class AppModule {
 }
@@ -190,7 +194,7 @@ _结构_
 _负责数据存储和检索_
 
 ```ts
-import {Injectable} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class CoffeesService {
@@ -202,39 +206,39 @@ export class CoffeesService {
 ```ts
 @Controller('coffees')
 export class CoffeesController {
-    //使用构造函数constructor注入service 第三个值是我们对他的命名
-    //The third value injected into service using the constructor is the name we give it
-    //注入后也可以使用service中使用的方法
-    //The same methods used in service can also be used after injection
-    //也可以在controller暂时自定义方法
-    //You can also temporarily customize methods in controller
-    constructor(private readonly coffeesService: CoffeesService) {
-    }
+  //使用构造函数constructor注入service 第三个值是我们对他的命名
+  //The third value injected into service using the constructor is the name we give it
+  //注入后也可以使用service中使用的方法
+  //The same methods used in service can also be used after injection
+  //也可以在controller暂时自定义方法
+  //You can also temporarily customize methods in controller
+  constructor(private readonly coffeesService: CoffeesService) {
+  }
 
-    //🧨🧨🧨🧨 具体见coffees.controller.ts 构造器以下具体操作
-    @Get()
-    update(@Query() paginationQuery) {
-        const {limit, offset} = paginationQuery;
-        return `This action returns all coffee, limit: ${limit}, offset: ${offset}`;
-    }
+  //🧨🧨🧨🧨 具体见coffees.controller.ts 构造器以下具体操作
+  @Get()
+  update(@Query() paginationQuery) {
+    const { limit, offset } = paginationQuery;
+    return `This action returns all coffee, limit: ${limit}, offset: ${offset}`;
+  }
 }
 ```
 
 **模拟数据源 coffees.service.ts**
 
 ```ts
-import {Injectable} from '@nestjs/common';
-import {Coffee} from "./coffee.entity";
+import { Injectable } from '@nestjs/common';
+import { Coffee } from "./coffee.entity";
 
 @Injectable()
 export class CoffeesService {
-    //模拟数据源  如数据库
-    //simulate data sources such as databases
-    //使用我们在entities中创建的数据 
-    // using data we created in entities
-    //还可以在其中预定义单个实体作为基础演示
-    //You can also pre-define a single entity there as a base demonstration
-    private coffees: Coffee[] = [];
+  //模拟数据源  如数据库
+  //simulate data sources such as databases
+  //使用我们在entities中创建的数据 
+  // using data we created in entities
+  //还可以在其中预定义单个实体作为基础演示
+  //You can also pre-define a single entity there as a base demonstration
+  private coffees: Coffee[] = [];
 }
 ```
 
@@ -248,40 +252,221 @@ export class CoffeesService {
 **coffees.service.ts**
 
 ```ts
-import {HttpException} from "@nestjs/common";
+import { HttpException } from "@nestjs/common";
 
 @Injectable()
 export class CoffeesService {
 //...
-    findOne(id: string) {
-        //nest 也为我们内置默认服务器内部抛错
-        // throw 'A random error'
-        // {
-        //   "statusCode": 500,
-        //   "message": "Internal server error"
-        // }
-        const coffee = this.coffees.find((item) => item.id === +id);
-        if (!coffee) {
-            //包括NotFoundException InternalServerErrorException BadRequestException等等
-            throw new HttpException(`Coffee #${id} not found`, HttpStatus.NOT_FOUND)
-            //{
-            //"statusCode": 404,
-            //"message": "Coffee #232323 not found"
-            //}
-            // 2.这个异常抛错助手已经帮我完成了状态码的抛出
-            //This exception throw assistant has helped me complete the status code throw
-            // throw new 包括NotFoundException(`Coffee #${id} not found`)
-            // {
-            //   "statusCode": 404,
-            //   "message": "Coffee #2 not found",
-            //   "error": "Not Found"
-            // }
-        }
-        return coffee
+  findOne(id: string) {
+    //nest 也为我们内置默认服务器内部抛错
+    // throw 'A random error'
+    // {
+    //   "statusCode": 500,
+    //   "message": "Internal server error"
+    // }
+    const coffee = this.coffees.find((item) => item.id === +id);
+    if (!coffee) {
+      //包括NotFoundException InternalServerErrorException BadRequestException等等
+      throw new HttpException(`Coffee #${id} not found`, HttpStatus.NOT_FOUND)
+      //{
+      //"statusCode": 404,
+      //"message": "Coffee #232323 not found"
+      //}
+      // 2.这个异常抛错助手已经帮我完成了状态码的抛出
+      //This exception throw assistant has helped me complete the status code throw
+      // throw new 包括NotFoundException(`Coffee #${id} not found`)
+      // {
+      //   "statusCode": 404,
+      //   "message": "Coffee #2 not found",
+      //   "error": "Not Found"
+      // }
     }
+    return coffee
+  }
 
 //...
 }
 ```
 
-### Encompass Business Domain in Modules
+### 15. Encompass Business Domain in Modules
+
+**CLI:指令：**
+
+> nest generate module 'name' //coffees.module
+
+> nest g s
+
+创建功能大模块---把其名自定义的controller service都单独放在其中
+
+会在你提供的Module数组中自动添加
+
+**app.module.ts**
+
+```ts
+@Module({
+  imports: [CoffeesModule],
+  controllers: [AppController, CoffeesController],
+  providers: [AppService, CoffeesService],
+})
+export class AppModule {
+}
+
+```
+
+**coffees.module.ts**
+
+**装饰器：**
+
+`@Module` 主要包括四个类容：controllers exports imports provides
+
+- `controllers` 用来实例化
+- `exports` 列出当前模块中的提供者
+- `imports` 列出其他模块 所需的其他模块
+- `provides` 列出nest injector 实例化的服务 在其中可以使用任何列出的服务 提供者
+
+这将很好的练习到我们分组和模块化
+
+```ts
+import { Module } from '@nestjs/common';
+
+//模块装饰器需要的是一个单一的对象
+@Module({
+  controller: [CoffeesController],
+  provides: [CoffeesService],
+})
+export class CoffeesModule {
+} 
+```
+
+这样做之后我们要确保我们的app.module.ts中删除掉了之前的
+
+**app.module.ts**
+
+```ts
+@Module({
+  //只需要imports 导入模块就行了
+  imports: [CoffeesModule],
+  controllers: [AppController],
+  providers: [AppService,]
+})
+```
+
+### 16. Introduction to Data Transfer Objects || DTO 数据传输对象
+
+**CLI:指令：**
+
+> nest generate class coffees/dto/create-coffee.dto --no-spec
+
+会在当前coffees 目录下创建dto
+
+```ts
+export class UpdateCoffeeDto {
+  //? 可选
+  readonly name?: string;
+  readonly brand?: string;
+  readonly flavors?: string[];
+}
+```
+
+使用
+**coffee.controller.ts**
+
+```ts
+import { UpdateCoffeeDto } from './dto/update-coffee.dto/update-coffee.dto';
+
+@Controller('coffees')
+export class CoffeesController {
+  constructor(private readonly coffeesService: CoffeesService) {
+  }
+
+//....
+  @Patch()
+  update(@Param('id') id: string, @Body() updateCoffeeDto: UpdateCoffeeDto) {
+    return this.coffeesService.update(id, updateCoffeeDto);
+  }
+
+  //....
+}
+```
+
+### 17. validate Input Data with Data transfer Objects
+
+_自动验证传入的请求_
+
+_nest 提供了validationPipe 来解决这个确切的问题_
+
+_可以在DTO中使用简单的注释来指定这些规则_
+
+使用：
+
+一、
+
+```ts
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import { ValidationPipe } from "@nestjs/common";
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  //注意还有很多全局管道在接下来深入探讨
+  //一定要记住在main中使用
+  app.useGlobalPipes(new ValidationPipe())
+  await app.listen(3000);
+}
+
+bootstrap();
+```
+
+二、
+
+> npm install class-transformer class-validator
+
+
+
+三、
+
+**create-coffee.dto**
+
+```ts
+import { IsString } from 'class-validator';
+
+export class CreateCoffeeDto {
+  @IsString()
+  readonly name: string;
+
+  @IsString()
+  readonly brand: string;
+
+  //表示期望值是一个字符串数组
+  @IsString({ each: true })
+  readonly flavors: string[];
+}
+```
+
+**处理create.coffee.dto多余代码**
+
+_使用nest提供了几个使用的函数来源于包————`mapped-types`的一部分_
+
+_这些函数可以帮助我们快速执行这些类型的常见类型转换_
+
+安装：
+
+> npm install @nestjs/mapped-types
+
+完成后看我们如何避免冗余代码：
+
+**update-coffee.dto.ts**
+
+```ts
+//使用partailtype 的辅助函数扩展这个类
+import { PartialType } from "@nestjs/mapped-types";
+import { CreateCoffeeDto } from "./create-coffee.dto";
+
+//返回我们传递给它类的类型
+//PartialType 里面都变成可选的类型了 可继承
+export class UpdateCoffeeDto extends PartialType(CreateCoffeeDto) {
+
+}
+```
+ 
+
