@@ -4,7 +4,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 export class Coffee {
   //主列 需要使用的传入就行了
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column()
   name: string;
@@ -13,5 +13,5 @@ export class Coffee {
   brand: string;
 
   @Column()
-  flavors: string[];
+  description: string;
 }
