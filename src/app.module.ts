@@ -14,7 +14,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: 'postGres',
+      password: 'postgres',
       database: 'task-management',
       //如何在类型的帮助下转换为数据库表和模式 也可以明确的加载单个实体 也可以说是自动加载单个实体 然后他们会为你找到这些实体文件并未你加载他们
       autoLoadEntities: true,

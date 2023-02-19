@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Coffee } from './entities/coffee.entity';
 import { CoffeesRepository } from './repositorys/coffees.repository';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CreateCoffeeDto } from './dto/create-coffee.dto/create-coffee.dto';
 
 @Injectable()
 export class CoffeesService {
@@ -25,5 +26,17 @@ export class CoffeesService {
       throw new NotFoundException(`Coffee #${id} not found`);
     }
     return found;
+  }
+
+  async createCoffee(createCoffeeDto: CreateCoffeeDto) {
+    const { name, brand, description } = createCoffeeDto;
+    const coffee = this.coffeesRepository.create({
+      name,
+      brand,
+      description,
+    });
+
+    await this.coffeesRepository.save(coffee);
+    return coffee;
   }
 }

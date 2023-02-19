@@ -18,26 +18,20 @@ import { Coffee } from './entities/coffee.entity';
 export class CoffeesController {
   constructor(private readonly coffeesService: CoffeesService) {}
 
-  @Get(':id')
+  @Get('/:id')
   findOne(@Param('id') id: string): Promise<Coffee> {
     return this.coffeesService.findOne(id);
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return `This action return  ${id} coffees fo your find`;
-  //   // return this.coffeesService.findOne(id);
-  // }
+  @Post()
+  create(@Body() createCoffeeDto: CreateCoffeeDto): Promise<Coffee> {
+    return this.coffeesService.createCoffee(createCoffeeDto);
+  }
+
   // @Get()
   // findAll() {
   //   return `This action return all  coffees`;
   //   // return this.coffeesService.findAll();
-  // }
-  //
-  // @Post()
-  // create(@Body() createCoffeeDto: CreateCoffeeDto) {
-  //   return createCoffeeDto;
-  //   // return this.coffeesService.create(createCoffeeDto);
   // }
   //
   // @Patch(':id')
