@@ -19,13 +19,11 @@ export class CoffeesController {
 
   @Get()
   findAll() {
-    // return `This action return all ${id} coffees`;
     return this.coffeesService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    // return `This action return  ${id} coffees fo your find`;
+  findOne(@Param('id') id: number) {
     return this.coffeesService.findOne(id);
   }
 
@@ -35,12 +33,12 @@ export class CoffeesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCoffeeDto: UpdateCoffeeDto) {
+  update(@Param('id') id: number, @Body() updateCoffeeDto: UpdateCoffeeDto) {
     return this.coffeesService.update(id, updateCoffeeDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.coffeesService.remove(id);
   }
 }
