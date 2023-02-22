@@ -15,7 +15,6 @@ import { COFFEE_BRANDS } from './coffees.constants';
     {
       provide: COFFEE_BRANDS,
       useValue: () => ['buddy brew', 'nescafe'],
-      scope: Scope.DEFAULT,
     },
   ],
   exports: [CoffeesService],
