@@ -7,6 +7,7 @@ import { Flavor } from './entities/flavor.entity';
 import { Event } from '../events/entities/event.entity';
 import { COFFEE_BRANDS } from './coffees.constants';
 
+
 @Module({
   imports: [TypeOrmModule.forFeature([Coffee, Flavor, Event])],
   controllers: [CoffeesController],
@@ -14,7 +15,7 @@ import { COFFEE_BRANDS } from './coffees.constants';
     CoffeesService,
     {
       provide: COFFEE_BRANDS,
-      useValue: ['buddy brew', 'nescafe'],
+      useValue: () => ['buddy brew', 'nescafe'],
     },
   ],
   exports: [CoffeesService],

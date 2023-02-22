@@ -1,15 +1,15 @@
 import { DynamicModule, Module } from '@nestjs/common';
-import { ConnectionOptions, createConnection } from 'typeorm';
+import { DataSourceOptions, DataSource } from 'typeorm';
 
 @Module({})
 export class DatabaseModule {
-  static register(options: ConnectionOptions): DynamicModule {
+  static register(options: DataSourceOptions): DynamicModule {
     return {
       module: DatabaseModule,
       providers: [
         {
           provide: 'CONNECTION',
-          useValue: createConnection(options),
+          useValue: new DataSource(options),
         },
       ],
     };

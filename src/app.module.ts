@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { CoffeesModule } from './coffees/coffees.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CoffeeRatingModule } from './coffee-rating/coffee-rating.module';
+import { DatabaseModule } from './database/database.module';
 
 //decorators（n:装饰器)
 //nest makes (extensive use of)(广泛使用) decorators
@@ -23,6 +24,7 @@ import { CoffeeRatingModule } from './coffee-rating/coffee-rating.module';
       synchronize: true,
     }),
     CoffeeRatingModule,
+    DatabaseModule,
   ],
   controllers: [AppController], //controller : controls the invocation of the service
   providers: [AppService], //create more services to facilitate isolation
