@@ -4,29 +4,32 @@ import { AppService } from './app.service';
 import { CoffeesModule } from './coffees/coffees.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CoffeeRatingModule } from './coffee-rating/coffee-rating.module';
-import { DatabaseModule } from './database/database.module';
+import { ConfigModule } from '@nestjs/config';
+import * as Joi from '@hapi/joi';
 
-//decorators（n:装饰器)
-//nest makes (extensive use of)(广泛使用) decorators
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      //让我们将所有这些变量测试放在`Joi.obiect( \)`中
+      validationSchema: Joi.object({
+        DATABASE_HOST: Joi.required(),
+        DATABASE_PORT: Joi.number().default(5432),
+      }),
+    }),
     CoffeesModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'postgres',
-      database: 'task-management',
-      //如何在类型的帮助下转换为数据库表和模式 也可以明确的加载单个实体 也可以说是自动加载单个实体 然后他们会为你找到这些实体文件并未你加载他们
+      host: process.env.DATABASE_HOST,
+      port: +process.env.DATABASE_PORT,
+      username: process.env.DATABASE_USER,
+      password: process.env.DATABASE_PASSWORD.replace(/g/, 'G'),
+      database: process.env.DATABASE_NAME,
       autoLoadEntities: true,
-      // 始终保持你的数据库模式同步
       synchronize: true,
     }),
     CoffeeRatingModule,
-    DatabaseModule,
   ],
-  controllers: [AppController], //controller : controls the invocation of the service
-  providers: [AppService], //create more services to facilitate isolation
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
