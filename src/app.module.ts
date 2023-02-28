@@ -5,6 +5,7 @@ import { CoffeesModule } from './coffees/coffees.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CoffeeRatingModule } from './coffee-rating/coffee-rating.module';
 import { ConfigModule } from '@nestjs/config';
+import { CommonModule } from './common/common.module';
 import appConfig from './config/app.config';
 
 @Module({
@@ -16,8 +17,8 @@ import appConfig from './config/app.config';
         host: process.env.DATABASE_HOST,
         port: +process.env.DATABASE_PORT,
         username: process.env.DATABASE_USER,
-        password: process.env.DATABASE_PASSWORD,
-        // password: process.env.DATABASE_PASSWORD.replace(/g/g, 'G'),
+        // password: process.env.DATABASE_PASSWORD,
+        password: process.env.DATABASE_PASSWORD.replace(/g/g, 'G'),
         database: process.env.DATABASE_NAME,
         autoLoadEntities: true,
         synchronize: true,
@@ -27,6 +28,7 @@ import appConfig from './config/app.config';
     ConfigModule.forRoot({ load: [appConfig] }),
     CoffeesModule,
     CoffeeRatingModule,
+    CommonModule,
   ],
   controllers: [AppController],
   providers: [AppService],
