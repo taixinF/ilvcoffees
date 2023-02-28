@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  Logger,
   Param,
   Patch,
   Post,
@@ -15,6 +14,8 @@ import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 import { PaginationQueryDto } from '../common/dto/pagination-query.dto';
 import { Public } from '../common/decorators/public.decorator';
+import { ParseIntPipe } from '../common/pipes/parse-int/parse-int.pipe';
+import { Protocol } from '../common/decorators/protocol.decorator';
 
 @Controller('coffees')
 export class CoffeesController {
@@ -22,14 +23,20 @@ export class CoffeesController {
 
   @Public()
   @Get()
-  async findAll(@Query() paginationQuery: PaginationQueryDto) {
+  async findAll(
+    @Protocol('https') protocol: string,
+    @Query() paginationQuery: PaginationQueryDto,
+  ) {
     //设置延时测试
-    await new Promise((resolve) => setTimeout(resolve, 5000));
+    // await new Promise((resolve) => setTimeout(resolve, 5000));
+    console.log(protocol);
     return this.coffeesService.findAll(paginationQuery);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number) {
+  //使用管道验证有好的提示
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    console.log(id);
     return this.coffeesService.findOne(id);
   }
 
