@@ -10,6 +10,7 @@ import appConfig from './config/app.config';
 
 @Module({
   imports: [
+    // 自定义配置文件数组
     TypeOrmModule.forRootAsync({
       //使用异步函数工厂
       useFactory: () => ({
@@ -17,14 +18,12 @@ import appConfig from './config/app.config';
         host: process.env.DATABASE_HOST,
         port: +process.env.DATABASE_PORT,
         username: process.env.DATABASE_USER,
-        // password: process.env.DATABASE_PASSWORD,
-        password: process.env.DATABASE_PASSWORD.replace(/g/g, 'G'),
+        password: process.env.DATABASE_PASSWORD,
         database: process.env.DATABASE_NAME,
         autoLoadEntities: true,
         synchronize: true,
       }),
     }),
-    // 自定义配置文件数组
     ConfigModule.forRoot({ load: [appConfig] }),
     CoffeesModule,
     CoffeeRatingModule,
