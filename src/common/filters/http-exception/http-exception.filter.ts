@@ -7,7 +7,7 @@ import {
 import { Response } from 'express';
 
 @Catch(HttpException)
-export class HttpExceptionFilter<T extends HttpException>
+export class HttpExceptionFilter<T extends HttpException = HttpException>
   implements ExceptionFilter
 {
   catch(exception: T, host: ArgumentsHost) {
@@ -16,9 +16,9 @@ export class HttpExceptionFilter<T extends HttpException>
     const status = exception.getStatus();
     const exceptionResponse = exception.getResponse();
     const error =
-      typeof response === 'string'
+      typeof exceptionResponse === 'string'
         ? { message: exceptionResponse }
-        : (exceptionResponse as object);
+        : exceptionResponse || {};
     response.status(status).json({
       ...error,
       timestamp: new Date().toISOString(),
