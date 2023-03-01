@@ -24,25 +24,7 @@ export class CoffeesController {
   }
 
   @Post()
-  create(@Body() createCoffeeDto: CreateCoffeeDto): Promise<Coffee> {
+  create(@Body() createCoffeeDto: CreateCoffeeDto) {
     return this.coffeesService.createCoffee(createCoffeeDto);
   }
-
-  // @Get()
-  // findAll() {
-  //   return `This action return all  coffees`;
-  //   // return this.coffeesService.findAll();
-  // }
-  //
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateCoffeeDto: UpdateCoffeeDto) {
-  //   return id + updateCoffeeDto + this.coffeesService;
-  //   // return this.coffeesService.update(id, updateCoffeeDto);
-  // }
-  //
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return id;
-  //   // return this.coffeesService.remove(id);
-  // }
 }

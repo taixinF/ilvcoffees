@@ -29,14 +29,6 @@ export class CoffeesService {
   }
 
   async createCoffee(createCoffeeDto: CreateCoffeeDto) {
-    const { name, brand, description } = createCoffeeDto;
-    const coffee = this.coffeesRepository.create({
-      name,
-      brand,
-      description,
-    });
-
-    await this.coffeesRepository.save(coffee);
-    return coffee;
+    return createCoffeeDto;
   }
 }

@@ -1,17 +1,14 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
 
-@Entity()
-export class Coffee {
-  //主列 需要使用的传入就行了
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
-  @Column()
+@Schema()
+export class Coffee extends Document {
+  @Prop()
   name: string;
-
-  @Column()
+  @Prop()
   brand: string;
-
-  @Column()
-  description: string;
+  @Prop([String])
+  flavors: string[];
 }
+
+export const CoffeeSchema = SchemaFactory.createForClass(Coffee);
